@@ -14,6 +14,19 @@ $(function(){
         autoplay: 2000
     });
 
+
+
+    $("#img-product").fileinput({
+        language: 'ru',
+        'showUpload':false,
+        'maxFileSize':4096
+
+    });
+
+    $('#choose-brand').on('change',function(){
+
+    });
+
 });
 
 
@@ -26,12 +39,5 @@ else {
 	$('#back-top').fadeOut(500);
 }
 
-
-    $("#img-product").fileinput({
-        language: 'ru',
-        'showUpload':false,
-        'maxFileSize':4096
-
-    });
 
 });

@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         DB::table('categories')->delete();
         DB::table('products')->truncate();
         DB::table('items')->delete();
+        DB::table('brands')->delete();
         DB::table('brand_models')->truncate();
         DB::table('item_attr')->truncate();
         DB::table('prod_attr')->truncate();
@@ -45,29 +46,35 @@ class DatabaseSeeder extends Seeder
             'value' => 'value'
         ];
 
-        $brands = [
-            'name' => 'New brand1'
-        ];
+        $brands = ['name' => 'New brand1'];
+        $brands2 = ['name' => 'New brand1'];
 
         $models = array(
             new App\BrandModel(array('name' => 'New model1')),
-            new App\BrandModel(array('name' => 'New model1')),
-            new App\BrandModel(array('name' => 'New model1')),
+            new App\BrandModel(array('name' => 'New model2')),
+            new App\BrandModel(array('name' => 'New model3')),
+        );
+
+        $models2 = array(
+            new App\BrandModel(array('name' => 'New model4')),
+            new App\BrandModel(array('name' => 'New model5')),
+            new App\BrandModel(array('name' => 'New model6')),
         );
 
         $category = App\Category::create($category);
         $product = App\Product::create($product);
-         /*App\Item::create($item);*/
-        $brand = App\Brand::create($brands);
-        $brand = App\Brand::find($brand->id);
-        $brand->brandmodel()->saveMany($models);
-
-        $category = App\Category::find($category->id);
         $category->products()->save($product);
+
+        $brand = App\Brand::create($brands);
+        $brand2 = App\Brand::create($brands2);
+        $brand->brandmodel()->saveMany($models);
+        $brand2->brandmodel()->saveMany($models2);
+
+
+
 
 
         $attribute = App\Attribute::create($attribute);
-        $attribute = App\Attribute::find($attribute->id);
         $item = App\Item::create($item);
         $attribute->items()->attach($item->id);
 

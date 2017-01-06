@@ -24,3 +24,12 @@
 
     });
 
+Route::group(['prefix'=>'admin'],function() {
+    Route::post('product/ajax', ['as'=>'product.ajax','uses'=>'ProductController@ajax']); //
+    Route::resource('product','ProductController');
+
+
+
+});
+
+
