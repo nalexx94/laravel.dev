@@ -39,6 +39,7 @@
                         <strong>{!! session('flash_notification.message') !!}</strong>
                     </div>
                 @endif
+
                 @yield('content')
 
             </div>
@@ -57,9 +58,6 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/fileinput.min.js') }}"></script>
 <script src="{{ asset('js/swiper/swiper.min.js') }}"></script>
-
-@yield('scripts')
-
 <script src="{{ asset('js/script.js') }}"></script>
 
 </body>

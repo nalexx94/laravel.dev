@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\Admin\ProductService;
 
 class ProductController extends Controller
 {
@@ -11,9 +13,25 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $_productService = false;
+
+    public function __construct()
+    {
+        $this->_productService = new ProductService();
+
+    }
+
+
     public function index()
     {
+        $title = 'Products';
+        $products = $this->_productService->getAllProducts();
+        return view('auth.admin.products.products')->with([
+            'title' => $title,
+            'products'=>$products,
 
+        ]);
     }
 
     /**
@@ -40,7 +58,7 @@ class ProductController extends Controller
 
         $options = [];
 
-       return view('shop.products.add')->with([
+       return view('auth.admin.products.add')->with([
            'title' => $title,
            'categories' =>$massCategory,
            'brands'=>$massBrands,

@@ -18,10 +18,17 @@ class DatabaseSeeder extends Seeder
         DB::table('brands')->delete();
         DB::table('brand_models')->truncate();
         DB::table('item_attr')->truncate();
+        DB::table('role_users')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('users')->truncate();
+        DB::table('activations')->truncate();
         DB::table('prod_attr')->truncate();
         DB::table('attributes')->truncate();
+        DB::table('menu')->truncate();
+        DB::table('menu_items')->truncate();
 
 
+        /*CATEGORIES, PRODUCTS, OTHERRS*/
         $category = [
            'name' => 'Main',
             'description' => 'Our main category for all products',
@@ -40,6 +47,9 @@ class DatabaseSeeder extends Seeder
             'hidden' => false,
             'slug' => 'product'
         ];
+
+
+
 
         $attribute = [
             'key' => 'key',
@@ -61,6 +71,8 @@ class DatabaseSeeder extends Seeder
             new App\BrandModel(array('name' => 'New model6')),
         );
 
+
+
         $category = App\Category::create($category);
         $product = App\Product::create($product);
         $category->products()->save($product);
@@ -70,13 +82,168 @@ class DatabaseSeeder extends Seeder
         $brand->brandmodel()->saveMany($models);
         $brand2->brandmodel()->saveMany($models2);
 
-
-
-
-
         $attribute = App\Attribute::create($attribute);
         $item = App\Item::create($item);
         $attribute->items()->attach($item->id);
+
+
+        /*Cabinet ADMIN menu*/
+        $cabinetAdminMenu = [
+            'name' => 'Admin menu',
+            'location' => 'admin'
+        ];
+        $cabinetMenuItemsAdmin = [
+            new App\MenuItems([
+                'name' => 'Товары',
+                'slug' => 'product.index',
+                'order' => 0,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Категории',
+                'slug' => 'category.index',
+                'order' => 1,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Заказы',
+                'slug' => 'orders.index',
+                'order' => 2,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Пользователи',
+                'slug' => 'users.index',
+                'order' => 3,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Настройки',
+                'slug' => 'settings',
+                'order' => 4,
+                'hidden' =>false
+            ]),
+        ];
+
+        $menu = App\Menu::create($cabinetAdminMenu);
+        $menu->menuItems()->saveMany($cabinetMenuItemsAdmin);
+
+        /*Cabinet USER menu*/
+
+        $cabinetUserMenu = [
+            'name' => 'User menu',
+            'location' => 'cabinet'
+        ];
+        $cabinetMenuItemsUser = [
+            new App\MenuItems([
+                'name' => 'Профиль',
+                'slug' => 'profile',
+                'order' => 0,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Заказы',
+                'slug' => 'myorders',
+                'order' => 1,
+                'hidden' =>false
+            ]),
+
+        ];
+
+        $menu = App\Menu::create($cabinetUserMenu);
+        $menu->menuItems()->saveMany($cabinetMenuItemsUser);
+
+
+
+        /*Main menu*/
+
+        $menu = [
+            'name' => 'Main menu',
+            'location' => 'header',
+        ];
+
+        $mainMenuItems = [
+                  new App\MenuItems([
+                      'name' => 'Home',
+                      'slug' => 'home',
+                      'order' => 0,
+                      'hidden' =>false
+                  ]),
+            new App\MenuItems([
+                'name' => 'Man',
+                'slug' => 'man',
+                'order' => 1,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Woman',
+                'slug' => 'woman',
+                'order' => 2,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'Accessories',
+                'slug' => 'accessories',
+                'order' => 3,
+                'hidden' =>false
+            ]),
+            new App\MenuItems([
+                'name' => 'About',
+                'slug' => 'about',
+                'order' => 4,
+                'hidden' =>false
+            ]),
+
+        ];
+
+        $menu = App\Menu::create($menu);
+        $menu->menuItems()->saveMany($mainMenuItems);
+
+        /*USERS AND ROLES*/
+        $user1 = [
+            'login' => 'user',
+            'password' => '123456',
+            'email' => 'user@mail.ru',
+            'first_name' => 'User',
+            'last_name' => 'User'
+        ];
+
+        $user2 = [
+            'login' => 'admin',
+            'password' => '123456',
+            'email' => 'admin@mail.ru',
+            'first_name' => 'Admin',
+            'last_name' => 'Admin'
+        ];
+
+        $role1 = Sentinel::getRoleRepository()->createModel()->create([
+            'name' => 'Registered',
+            'slug' => 'Registered',
+        ]);
+
+        $role1->permissions = [
+            'registered' => true,
+        ];
+
+        $role1->save();
+
+        $role2 = Sentinel::getRoleRepository()->createModel()->create([
+            'name' => 'Administrator',
+            'slug' => 'Administrator',
+        ]);
+
+        $role2->permissions = [
+            'admin' => true,
+        ];
+
+        $role2->save();
+
+        $user = Sentinel::registerAndActivate($user1);
+        $role1->users()->attach($user);
+
+        $user = Sentinel::registerAndActivate($user2);
+        $role2->users()->attach($user);
+
 
     }
 }

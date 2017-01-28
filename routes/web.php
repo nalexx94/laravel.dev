@@ -24,12 +24,32 @@
 
     });
 
-Route::group(['prefix'=>'admin'],function() {
-    Route::post('product/ajax', ['as'=>'product.ajax','uses'=>'ProductController@ajax']); //
-    Route::resource('product','ProductController');
+Route::group(['prefix'=>'panel','middleware'=>'SentAuth'],function(){
+    Route::get('/',['as'=>'user_cab','uses'=>'Cabinet\CabinetController@index']);
+    Route::get('/profile',['as'=>'profile','uses'=>'Cabinet\ProfileController@index']);
+    Route::get('/myorders',['as'=>'myorders','uses'=>'Cabinet\OrderController@index']);
 
+    Route::group(['middleware'=>'Admin'],function() {
+        Route::post('product/ajax', ['as'=>'product.ajax','uses'=>'Admin\ProductController@ajax']); //
+        Route::resource('product','Admin\ProductController');
+        Route::resource('category','Admin\CategoryController');
+        Route::resource('orders','Admin\OrderController');
+        Route::resource('users','Admin\UserController');
+        Route::get('settings',['as'=>'settings','uses'=>'Admin\SettingsController@index']);
 
+    });
 
 });
+
+
+Route::get('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegisterForm']);
+Route::post('register', ['as' => 'register', 'uses' => 'Auth\RegisterController@createUser']);
+
+Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@loginUser']);
+
+Route::get('password/reset', ['as' => 'password/reset', 'uses' => 'Auth\ForgotPasswordController@index']);
+Route::post('password/email', ['as' => 'password/email', 'uses' => 'Auth\ForgotPasswordController@sendPasswordEmail']);
 
 

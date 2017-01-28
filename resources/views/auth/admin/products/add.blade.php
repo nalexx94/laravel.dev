@@ -10,7 +10,7 @@
 
 @section('content')
 
-    {!! Form::open(['route' =>'product.store','class'=>'shop-forms','enctype' => 'multipart/form-data','files' => true]) !!}
+    {!! Form::open(['url' =>route('product.store',['user'=>Auth::user()->login]),'class'=>'shop-forms','enctype' => 'multipart/form-data','files' => true]) !!}
     {{ csrf_field() }}
 
 
@@ -76,7 +76,7 @@
 
 @section('scripts')
     <script>
-        var productUrl = '{{ route('product.ajax') }}';
+        var productUrl = '{{ route('product.ajax',['user'=>Auth::user()->login]) }}';
     </script>
     <script src="{{ asset('js/product.js') }}"></script>
     @endsection

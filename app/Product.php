@@ -15,6 +15,11 @@ class Product extends Model
         return $this->belongsToMany('App\Attribute','prod_attr','attr_id','prod_id');
     }
 
+    public function images()
+    {
+        return $this->belongsToMany('App\Image','image_products','image_id','prod_id');
+    }
+
     public function items()
     {
         return $this->hasMany('App\Item');

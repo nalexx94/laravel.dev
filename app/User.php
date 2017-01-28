@@ -3,27 +3,25 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cartalyst\Sentinel\Users\EloquentUser as CartalystUser;
 
-class User extends Authenticatable
+class User extends CartalystUser
 {
-    use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
+    protected $table = 'users';
     protected $fillable = [
-        'name', 'email', 'password',
+        'email',
+        'login', /* i added this */
+        'password',
+        'last_name',
+        'first_name',
+        'permissions',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+
+    protected $loginNames = ['email','login'];
+
+
+
 }

@@ -2,14 +2,26 @@
     <button class="btn"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></button>
 </div>
 
+
 <!-- h-nav begin -->
 <section id="h-nav">
     <div class="container">
         <div class="block-auth fl-r">
-
-                <a href="#">Login</a>
+            @if (Sentinel::guest())
+                <a href="{{ route('login') }}">Login</a>
                 <span class="separator">/</span>
-                <a href="#">Registration</a>
+                <a href="{{ route('register') }}">Register</a>
+            @else
+
+                <a href=" {{ route('user_cab') }} ">Cabinet</a>
+                <span class="separator">/</span>
+                <a href="{{ url('/logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            @endif
+
 
         </div>
     </div>
@@ -27,8 +39,23 @@
         </div>
         </a>
         <div class="menu">
-
             <ul class="main-menu">
+
+
+            @foreach (App('SiteMenu')->getMenuByLocation()->getMenuItems() as $item)
+
+                @if ($item['slug'] == Route::currentRouteName())
+
+                    <li class="active"><a href="{{ route($item['slug']) }}">{{ $item['name'] }} </a></li>
+                @else
+
+                    <li class="">
+                        <a href="{{ route($item['slug']) }}">{{ $item['name'] }} </a></li>
+                @endif
+
+            @endforeach
+            </ul>
+            <!-- <ul class="main-menu">
 
                <li class="active"><a href="{{ route('home') }}">Home</a></li>
                <li><a href="{{ route('man') }}">Man</a></li>
@@ -36,7 +63,7 @@
                <li><a href="{{ route('accessories') }}">Accessories</a></li>
                <li><a href="{{ route('about') }}">About</a></li>
 
-            </ul>
+            </ul> -->
         </div>
         <div class="icon-menu">
             <div class="clearfix">
