@@ -45,7 +45,6 @@ class ProductController extends Controller
         $title = 'Добавление продукта';
         $categories = \App\Category::all();
         $brands = \App\Brand::all();
-        $models = \App\BrandModel::all();
 
         foreach ($categories as $category)
         {
@@ -57,13 +56,12 @@ class ProductController extends Controller
             $massBrands[$brand->id] =  $brand->name;
         }
 
-        $options = [];
 
        return view('auth.admin.products.add')->with([
            'title' => $title,
            'categories' =>$massCategory,
            'brands'=>$massBrands,
-           'models'=>$options
+
        ]);
     }
 

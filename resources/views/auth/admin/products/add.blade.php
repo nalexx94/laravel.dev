@@ -1,16 +1,10 @@
-@extends('layouts.app')
+@extends('auth.cabinet.cabinet')
 
-@section('title')
-   Product add
-@endsection
+@section('cabinet-content')
 
-@section('breadcrumbs')
-    @include('layouts.breadcrumbs')
-@endsection
 
-@section('content')
 
-    {!! Form::open(['url' =>route('product.store',['user'=>Auth::user()->login]),'class'=>'shop-forms','enctype' => 'multipart/form-data','files' => true]) !!}
+    {!! Form::open(['url' =>route('product.store'),'class'=>'shop-forms','enctype' => 'multipart/form-data','files' => true]) !!}
     {{ csrf_field() }}
 
 
@@ -23,44 +17,74 @@
     </div>
 
     <div class="form-group{{ $errors->has('brand') ? ' has-error' : '' }}">
-        <label for="brand" class="control-label">Брэнд</label>
 
-        <div >
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="brand" class="control-label">Брэнд</label>
 
-                {!! Form::select('brand_id',$brands,old('brand_id'),['placeholder'=>'Choose brand','id'=>'choose-brand','class' => 'form-control']) !!}
+                <div >
 
+                    {!! Form::select('brand_id',$brands,old('brand_id'),['placeholder'=>'Choose brand','id'=>'choose-brand','class' => 'form-control']) !!}
+
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <label for="brand" class="control-label">Новый брэнд</label>
+
+                <div>
+                    {!! Form::text('new-brand',old('new-brand'),['placeholder'=>'Set New Brand','class'=>'form-control']) !!}
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
-        <label for="model" class="control-label">Модель</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="model" class="control-label">Модель</label>
 
-        <div >
-            {!! Form::select('model_id',[],null,['id'=>'brandmodels','disabled','placeholder'=>'Choose model','class' => 'form-control']) !!}
+                <div >
+                    {!! Form::select('model_id',[],null,['id'=>'brandmodels','disabled','placeholder'=>'Choose model','class' => 'form-control']) !!}
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <label for="brand" class="control-label">Новая модель</label>
+
+                <div>
+                    {!! Form::text('new-model',old('new-brand'),['placeholder'=>'Set New Model','disabled','class'=>'form-control']) !!}
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="form-group ">
-        <label for="hidden" class="control-label">Отображать</label>
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="hidden" class="control-label">Отображать</label>
 
-        <div >
+                <div >
 
-            {!! Form::select('hidden',['0' => 'Да','1' => 'Нет'],old('hidden'),['class' => 'form-control']) !!}
+                    {!! Form::select('hidden',['0' => 'Да','1' => 'Нет'],old('hidden'),['class' => 'form-control']) !!}
 
 
 
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <label for="hidden" class="control-label">Изображение</label>
+
+                <div>
+                    {!! Form::file('images',['id'=>'img-product']) !!}
+
+
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <div class="form-group ">
-        <label for="hidden" class="control-label">Изображение</label>
-
-        <div>
-            {!! Form::file('images',['id'=>'img-product']) !!}
-
-
-        </div>
-    </div>
 
     <div class="form-group">
         <div >
@@ -76,7 +100,7 @@
 
 @section('scripts')
     <script>
-        var productUrl = '{{ route('product.ajax',['user'=>Auth::user()->login]) }}';
+        var productUrl = '{{ route('product.ajax') }}';
     </script>
     <script src="{{ asset('js/product.js') }}"></script>
     @endsection

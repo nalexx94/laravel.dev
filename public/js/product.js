@@ -34,6 +34,7 @@ $(function(){
 
     $('#choose-brand').on('change',function(){
         var newSelected = Number($(this).val());
+
         if (window.selectedBrand) {
             if (selectedBrand !== newSelected) {
                 getNewModels(newSelected);
