@@ -14,7 +14,7 @@ class ProductService {
 
     public function getAllProducts()
     {
-        return (new Product())->get();
+        return Product::with('category','brand','model','images')->get();
     }
 
     public function addProduct($data)

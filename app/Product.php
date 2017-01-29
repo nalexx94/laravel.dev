@@ -20,6 +20,11 @@ class Product extends Model
         return $this->belongsToMany('App\Image','image_products','image_id','prod_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Category','cat_id');
+    }
+
     public function items()
     {
         return $this->hasMany('App\Item');
@@ -27,12 +32,12 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->hasOne('App\Brand');
+        return $this->belongsTo('App\Brand');
     }
 
-    public function brandmodel()
+    public function model()
     {
-        return $this->hasOne('App\BrandModel','model_id');
+        return $this->belongsTo('App\BrandModel');
     }
 
 }

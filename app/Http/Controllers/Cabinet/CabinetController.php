@@ -12,10 +12,10 @@ class CabinetController extends Controller
     {
         $submenu = 0;
         $title = 'Adminka';
-        $submenu = 1;
+
         return view('auth.cabinet.cabinet')->with([
             'title' => $title,
-            'submenu' => $submenu
+
 
         ]);
 

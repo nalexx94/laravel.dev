@@ -71,15 +71,24 @@ class DatabaseSeeder extends Seeder
             new App\BrandModel(array('name' => 'New model6')),
         );
 
-
+        $model3 = array('name' => 'New model4');
 
         $category = App\Category::create($category);
         $product = App\Product::create($product);
         $category->products()->save($product);
 
         $brand = App\Brand::create($brands);
+        $brand->product()->save($product);
+
         $brand2 = App\Brand::create($brands2);
         $brand->brandmodel()->saveMany($models);
+
+        $model = App\BrandModel::create($model3);
+       $brand->brandmodel()->save($model);
+        $model->product()->save($product);
+
+        //$model->product()-save($product);
+
         $brand2->brandmodel()->saveMany($models2);
 
         $attribute = App\Attribute::create($attribute);

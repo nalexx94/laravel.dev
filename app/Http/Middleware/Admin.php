@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Gate;
+use Sentinel;
 
 class Admin
 {
@@ -24,7 +25,16 @@ class Admin
             return redirect()->back();
         }*/
 
+        $user = Sentinel::getUser();
+        if ($user->hasAccess(['admin'])) {
             return $next($request);
+        }
+        else {
+            flash('Доступ запрещён','danger');
+            return redirect()->back();
+        }
+
+
 
 
     }

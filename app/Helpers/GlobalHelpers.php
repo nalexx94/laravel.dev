@@ -13,4 +13,16 @@ class GlobalHelpers
             return route($route,['user'=>Auth::user()->login]);
         }
     }
+
+    public function statusHiddenTable($status) {
+
+
+        $res = '';
+        switch ($status) {
+            case 0: $res = 'Да'; break;
+            case 1: $res = 'Нет'; break;
+        }
+
+        return $res;
+    }
 }

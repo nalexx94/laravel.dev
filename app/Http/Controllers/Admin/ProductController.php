@@ -27,9 +27,10 @@ class ProductController extends Controller
     {
         $title = 'Products';
         $products = $this->_productService->getAllProducts();
+
         return view('auth.admin.products.products')->with([
             'title' => $title,
-            'products'=>$products,
+            'products'=>$products->toArray(),
 
         ]);
     }
