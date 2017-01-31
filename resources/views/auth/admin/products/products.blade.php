@@ -1,7 +1,7 @@
 @extends('auth.cabinet.cabinet')
 
 
-@section('content')
+@section('cabinet-content')
 
 
     <a class="btn btn-primary" href="{{ route('product.create') }}">Добавить продукт</a>
