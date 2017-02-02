@@ -24,6 +24,7 @@ $(function(){
                        });
 
                        $('#brandmodels').empty().append(options).removeAttr('disabled');
+                       $('input[name="new-model"]').removeAttr('disabled');
                    }
 
                },

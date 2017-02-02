@@ -73,7 +73,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->_productService->addProduct($request);
+        return redirect()->back();
 
     }
 

@@ -10,6 +10,10 @@ class Brand extends Model
 
     protected $fillable = array('name','description');
 
+    public $rules = [
+        'name' => 'required|unique:brands|max:255',
+    ];
+
     public function brandmodel()
     {
         return $this->hasMany('App\BrandModel');

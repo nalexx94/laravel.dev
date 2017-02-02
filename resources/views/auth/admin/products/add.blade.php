@@ -52,7 +52,7 @@
                 <label for="brand" class="control-label">Новая модель</label>
 
                 <div>
-                    {!! Form::text('new-model',old('new-brand'),['placeholder'=>'Set New Model','disabled','class'=>'form-control']) !!}
+                    {!! Form::text('new-model',old('new-model'),['placeholder'=>'Set New Model','class'=>'form-control']) !!}
                 </div>
             </div>
         </div>

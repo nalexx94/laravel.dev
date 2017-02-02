@@ -9,6 +9,12 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = array('brand_id','model_id', 'cat_id','description', 'slug', 'hidden');
 
+    public $rules = [
+        'brand_id' => 'integer|exists:brands,id',
+        'model_id' => 'integer|exists:brand_models,id',
+        'cat_id' => 'integer|exists:categories,id',
+    ];
+
 
     public function attributes()
     {
